@@ -1,0 +1,6 @@
+.env
+nodejs
+.nodejs
+.vscode
+/certificates
+.DS_STORE
