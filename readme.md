@@ -1,4 +1,4 @@
-# ikev2 vpn users managment server
+# ikev2 vpn users management server
 
 ## Introduction
 
