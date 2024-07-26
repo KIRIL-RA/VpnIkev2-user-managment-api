@@ -46,13 +46,13 @@ DEV="true"
 HOSTNAME="localhost"
 ```
 #### Paramters description
-***PORT*** - application port
-***API_SECRET*** - generate your own secret, it will be used for make api requests. Save it in safe place, its token cricital for safety reasons.
-***DB_USER*** - database username
-***DB_PASSWORD*** - database user password
-***CERTIFITES_DIRECTORY*** - directory, where vpn server save certificates/configs. Change it on directory, where your vpn server save certs. By default it will be your root user directory
-***DEV*** - enable/disable dev mode
-***HOSTNAME*** - name or ip of your server. Used for setup swagger route.
+***PORT*** - application port<br>
+***API_SECRET*** - generate your own secret, it will be used for make api requests. Save it in safe place, its token cricital for safety reasons.<br>
+***DB_USER*** - database username<br>
+***DB_PASSWORD*** - database user password<br>
+***CERTIFITES_DIRECTORY*** - directory, where vpn server save certificates/configs. Change it on directory, where your vpn server save certs. By default it will be your root user directory<br>
+***DEV*** - enable/disable dev mode<br>
+***HOSTNAME*** - name or ip of your server. Used for setup swagger route.<br>
 
 After creating *.env* file you need to create folders structure for certificates. 
 Create folder such as on scheme, in project directory
