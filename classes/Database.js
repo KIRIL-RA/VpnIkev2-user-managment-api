@@ -42,10 +42,17 @@ class DataBaseWorker{
         return result.rows;
     }
 
-    // Add new user to database
+    /**
+     * Add new user to database
+     * @param {*} user 
+     * @param {*} path 
+     * @param {*} password 
+     * @param {*} type 
+     * @returns 
+     */
     async AddUser(user, path, password='_', type='_'){
         let query = '';
-        query = `INSERT INTO ${table_names.USERS} (path, name, password, type) VALUES ('${path}', '${user}', '${password}', '${type}');`;
+        query = `INSERT INTO ${table_names.USERS} ( name, password, type) VALUES ('${user}', '${password}', '${type}');`;
 
         // Request data from table
         const result = await this.client.query(query);
@@ -54,7 +61,7 @@ class DataBaseWorker{
 
     async DeleteUser(user){
         let query = '';
-        query = `DELETE FROM ${table_names.USERS} WHERE user = '${user}'`;
+        query = `DELETE FROM ${table_names.USERS} WHERE name = '${user}'`;
 
         // Request data from table
         const result = await this.client.query(query);

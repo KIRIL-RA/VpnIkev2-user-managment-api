@@ -5,10 +5,32 @@ const {fileDirectories} = require("./../classes/User");
 const fs = require('fs');
 const path = require('path');
 
-// Serve static files with token verification
-router.get(`/ios/:filename`, VerifyToken, (req, res) => {
+/**
+ * @swagger
+ * 
+ * /ios/:username.mobileconfig:
+ *   get:
+ *     tags: [Getting user certificates]
+ *     parameters:
+ *       - in: query
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Access token, that in .env
+ *     summary: Getting ios/macos sertificate for connect via os core functions app. Insert instead :username username of user fow who you need sertificate.
+ *     responses:
+ *       200:
+ *         description: Ios/macos config file
+ *         content:
+ *            application/file:
+ *             schema:
+ *               type: Ios/macos config file
+ *               format: binary
+ */
+router.get(`/ios/:filename.mobileconfig`, VerifyToken, (req, res) => {
     const { filename } = req.params;
-    const filePath = path.join(fileDirectories.ios, `${filename}.mobileconfig`);
+    const filePath = path.join(fileDirectories.ios, `${filename}`);
   
     // Check if file exists
     if (fs.existsSync(filePath)) {

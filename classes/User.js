@@ -1,4 +1,4 @@
-const { AddNewUser } = require('./VPN');
+const VPN = require('./VPN');
 require('dotenv').config();
 const DB = require('./Database');
 const fs = require('fs');
@@ -27,7 +27,7 @@ async function AddNewIkev2User() {
 
     // Creating new user certificate
     if (!isDev) {
-        const creatingResult = await AddNewUser(userName);
+        const creatingResult = await VPN.AddNewUser(userName);
         if (!creatingResult) return false;
     }
 
@@ -53,6 +53,34 @@ async function AddNewIkev2User() {
     return {name: userName}
 }
 
+/**
+ * REvoke user certificate
+ * @param {*} userName 
+ */
+async function RevokeUser(userName){
+    // Check if user exist
+    const searchUser = await DB.SearchUser(userName);
+    if(searchUser.length == 0) return false;
+    
+    const iosPath = path.join(fileDirectories.ios, `${userName}.mobileconfig`);
+    const strongswanPath = path.join(fileDirectories.strongswan, `${userName}.sswan`);
+    const commonPath = path.join(fileDirectories.common_certificate, `${userName}.p12`);
+
+    // Revoke user certificate
+    if (!isDev) {
+        const creatingResult = await VPN.RevokeUser(userName);
+        if (!creatingResult) return false;
+    }
+
+    // Delete certificates
+    deleteCertificate(iosPath);
+    deleteCertificate(strongswanPath);
+    deleteCertificate(commonPath);
+
+    await DB.DeleteUser(userName);
+    return true;
+}
+
 const ensureDirectoryExistence = (filePath) => {
     const dirname = path.dirname(filePath);
     if (fs.existsSync(dirname)) {
@@ -73,4 +101,13 @@ const moveFile = (source, destination) => {
     });
 };
 
-module.exports = { AddNewIkev2User, fileDirectories };
+const deleteCertificate = (path) =>{
+    try{
+        fs.unlinkSync(path);
+    }
+    catch(e){
+        console.log(`Error deleting file ${path}`);
+    }
+}
+
+module.exports = { AddNewIkev2User, fileDirectories, RevokeUser };

@@ -1,25 +1,40 @@
-const pg = require('pg')
-const { Client } = pg
+// Import the pg library
+const { Client } = require('pg');
+require('dotenv').config();
 
+// Define the connection configuration
 const client = new Client({
-    user: 'rcd_user',
-    password: 'car_driver_psd',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     host: 'localhost',
-    port: 5432,
     database: 'vpn',
-})
+    port: 5432, // Default PostgreSQL port
+});
 
-async function Main() {
-    await client.connect();
-    const createDbText = "CREATE TABLE users (path varchar(300), name varchar(100), password varchar(100), type varchar(300));";
-    const creatingTable = await client.query(createDbText)
-    console.log(`Creating table result: ${creatingTable.command}`)
+// Connect to the database
+client.connect()
+    .then(() => {
+        console.log('Connected to the database successfully.');
 
-    //const queryText = "INSERT INTO cars VALUES ('Машина 1', '123123123', FALSE, 0, 0, null, null, null);";
-    //const result = await client.query(queryText)
+        // Define the query to create the users table
+        const createTableQuery = `
+      CREATE TABLE IF NOT EXISTS users (
+        name VARCHAR(50),
+        password VARCHAR(50),
+        type VARCHAR(20)
+      );
+    `;
 
-    //console.log(`Filling table result: ${result.command}`)
-    return 1;
-}
-
-Main();
+        // Execute the query to create the table
+        return client.query(createTableQuery);
+    })
+    .then(() => {
+        console.log('Table "users" created successfully.');
+    })
+    .catch((err) => {
+        console.error('Error executing query', err.stack);
+    })
+    .finally(() => {
+        // Close the database connection
+        client.end();
+    });

@@ -6,7 +6,7 @@ const PROCESS_STATUSES = {
     IN_PROGRESS: "progress"
 }
 
-function RunProcess(scriptPath, args) {
+function RunProcess(scriptPath, args, isNeedConfirmation=false) {
     return new Promise((resolve, reject) => {
         let status = PROCESS_STATUSES.IN_PROGRESS;
 
