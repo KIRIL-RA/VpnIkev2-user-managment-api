@@ -6,7 +6,7 @@ const PROCESS_STATUSES = {
     IN_PROGRESS: "progress"
 }
 
-function RunProcess(scriptPath, args, isNeedConfirmation=false) {
+function RunProcess(scriptPath, args, isNeedConfirmation = false) {
     return new Promise((resolve, reject) => {
         let status = PROCESS_STATUSES.IN_PROGRESS;
 
@@ -22,6 +22,13 @@ function RunProcess(scriptPath, args, isNeedConfirmation=false) {
 
         // Listen for script's request for input
         child.stdout.on('data', (data) => {
+            if (isNeedConfirmation) {
+                // Check if the output contains "Y/n" and respond with 'y'
+                if (data.toString().includes('[y/N]')) {
+                    child.stdin.write('y');
+                    child.stdin.end()
+                }
+            }
             console.log(`Script stdout: ${data}`);
         });
 
@@ -36,4 +43,4 @@ function RunProcess(scriptPath, args, isNeedConfirmation=false) {
     });
 }
 
-module.exports = {RunProcess};
+module.exports = { RunProcess };
