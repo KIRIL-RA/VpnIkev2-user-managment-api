@@ -28,7 +28,7 @@ const path = require('path');
  *               type: Common config file
  *               format: binary
  */
-router.get(`/common/:filename.p12`, VerifyToken, (req, res) => {
+router.get(`/common/:filename`, VerifyToken, (req, res) => {
     const { filename } = req.params;
     const filePath = path.join(fileDirectories.common_certificate, `${filename}`);
   

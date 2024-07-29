@@ -28,7 +28,7 @@ const path = require('path');
  *               type: Ios/macos config file
  *               format: binary
  */
-router.get(`/ios/:filename.mobileconfig`, VerifyToken, (req, res) => {
+router.get(`/ios/:filename`, VerifyToken, (req, res) => {
     const { filename } = req.params;
     const filePath = path.join(fileDirectories.ios, `${filename}`);
   
