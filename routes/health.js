@@ -36,8 +36,8 @@ require('dotenv').config();
  *                   description: server status
  */
 router.get('/health', VerifyToken, async (req, res) => {
-    if(userName != false) res.status(200).json({ status: 'ok' });
-    else res.status(500).json({ message: "Somthing went wrong" });
+    res.status(200).json({ status: 'ok' });
+    res.status(500).json({ message: "Somthing went wrong" });
 });
 
 module.exports = router;
