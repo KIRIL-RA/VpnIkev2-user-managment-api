@@ -13,7 +13,7 @@ require('dotenv').config();
  * @swagger
  * 
  * /health:
- *   post:
+ *   get:
  *     tags: [Status]
  *     parameters:
  *       - in: query
