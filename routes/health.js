@@ -22,7 +22,7 @@ require('dotenv').config();
  *         schema:
  *           type: string
  *         description: Access token, that in .env
- *     summary: Adding new vpn user. You i'll recieve username, that you need save it. It will be used for getting user sertificates.
+ *     summary: Get server status
  *     responses:
  *       200:
  *         description: User succesfully added
@@ -35,7 +35,7 @@ require('dotenv').config();
  *                   type: string
  *                   description: server status
  */
-router.post('/addnewuser', VerifyToken, async (req, res) => {
+router.get('/addnewuser', VerifyToken, async (req, res) => {
     if(userName != false) res.status(200).json({ status: 'ok' });
     else res.status(500).json({ message: "Somthing went wrong" });
 });
