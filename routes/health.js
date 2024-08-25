@@ -35,7 +35,7 @@ require('dotenv').config();
  *                   type: string
  *                   description: server status
  */
-router.get('/addnewuser', VerifyToken, async (req, res) => {
+router.get('/health', VerifyToken, async (req, res) => {
     if(userName != false) res.status(200).json({ status: 'ok' });
     else res.status(500).json({ message: "Somthing went wrong" });
 });
